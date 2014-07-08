@@ -6,64 +6,65 @@
 #version::v1.0
 #mail::jadore@jadore.wang
 
-from libs.MstUpdate import update
-from libs.MstCache  import cache
+from lib.utils.tools import tools
+from lib.utils.banner import banner
+from lib.utils.db import DB
+from lib.utils.prettyPrint import *
+from lib.utils.prettyPrint import prettyPrint as pp
+
+db = DB()
+banner = banner()
 
 def main():
-    cache.start()
+    tools.start()
+    db.initDB()
+    banner.main()
     try:
         while True:
-            cache.printmst()
-            cmd=raw_input('>')
+            cmd = raw_input('>')
             if   cmd == 'help':
-                cache.mainhelp()
+                tools.mainHelp()
             elif cmd == 'exit':
-                cache.mainexit()
+                tools.mainExit()
             elif cmd == 'cls' :
-                cache.cls()
+                tools.cls()
             elif cmd == 'use':
-                cache.usage("use")
+                tools.usage("use")
             elif cmd == 'show':
-                cache.usage("show")
+                tools.usage("show")
             elif cmd == 'search':
-                cache.usage("search")
+                tools.usage("search")
             elif cmd == 'banner':
-                cache.banner()
-            elif cmd == 'update':
-                update.start()
+                banner.main()
             elif len(cmd.split(" ")) == 2:
                 cnd = cmd.split(" ")
                 c   = cnd[0]
                 g   = cnd[1]
                 if    c == 'search':
                     if len(g)>0 and len(g.split(" "))>0:
-                        cache.search(g)
+                        db.search(g)
                     else:
-                        cache.usage("search")
+                        tools.usage("search")
                 elif  c == 'show':
-                    if   g == 'exploit':
-                        cache.showplus('exploit')
-                    elif g == 'payload':
-                        cache.showplus('payload')
-                    elif g == 'multi':
-                        cache.showplus('multi')
+                    if   g == 'mongodb':
+                        db.showPlugins('mongodb')
                     elif g == 'all':
-                        cache.showplus('all')
+                        db.showPlugins('all')
                     else:
-                        cache.usage("show")
+                        tools.usage("show")
                 elif  c == 'use':
                     if len(g) > 0 or len(g.split(" ")) > 0:
                         cache.load(g)
                     else:
-                        cache.usage("use")
+                        tools.usage("use")
                 elif  len(cmd) > 0:
-                    cache.execmd(cmd)
+                    tools.exeCMD(cmd)
             elif len(cmd) > 0:
-                cache.execmd(cmd)
+                tools.exeCMD(cmd)
     except KeyboardInterrupt:
-            cache.mainexit()
+            tools.mainExit()
     except Exception,e:
-            cache.errmsg(e)
+            tools.errmsg(e)
                                      
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
