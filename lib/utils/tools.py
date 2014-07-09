@@ -29,8 +29,8 @@ class tools:
         pp.prettyPrint("[!] Err:%s"%msg,RED)
         
     def mainExit(self):
-        '''exit app'''
-        pp.prettyPrint("\n[*] GoodBye :)",RED)
+        '''exit NoSqlSploit'''
+        pp.prettyPrint("\nBye ",RED)
         exit(0)
 
     def start(self):
@@ -44,36 +44,31 @@ class tools:
         pp.prettyPrint('        -------         -----------',GREY,0)
         pp.prettyPrint('''
         help            Displays the help menu
-        exit            Exit the MstApp
+        exit            Exit the NoSqlSploit
         cls             Clear the screen
         show            List the plugins
         search          Search plugins
-        use             Use the plugin
-        update          Update mst|plugins''',CYAN)
-        pp.prettyPrint('MST HELP::SHOW',YELLOW)
+        use             Use the plugin''',CYAN)
+        pp.prettyPrint('NoSqlSploit HELP::SHOW',YELLOW)
         pp.prettyPrint('==============',GREY)
         pp.prettyPrint('        COMMAND         DESCRIPTION',YELLOW)
         pp.prettyPrint('        -------         -----------',GREY,0)
         pp.prettyPrint('''
-        exploit         List the exploit plugins
-        payload         List the payload plugins
-        multi           List the multi plugins
+        exploit         List the mongodb plugins
         all             List all the plugins''',CYAN)
 
-    def usage(self,c):
+    def usage(self,keyword):
         '''show usage'''
-        def ius(c):
-            pp.prettyPrint('[?] USAGE:%s'%c,YELLOW)
-        if   c == "search":
-            ius('search <plugin>')
-        elif c == "show":
-            ius('show <exploit|payload|multi|all>')
-        elif c == "use":
-            ius('use <plugin|pluginID>')
-        elif c == "update":
-            ius('update <mst|plugins>')
+        def showUsage(tips):
+            pp.prettyPrint('[?] USAGE:%s'%tips,YELLOW)
+        if  keyword == "search":
+            showUsage('search <plugin>')
+        elif keyword == "show":
+            showUsage('show <mongodb|all>')
+        elif keyword == "use":
+            showUsage('use <plugin|pluginID>')
 
 if __name__=='__main__':
     print __doc__
 else:
-    tools = tools()
+    tool = tools()

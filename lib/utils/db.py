@@ -20,7 +20,7 @@ class DB:
     def insertToDB(self,plugins,dbType):
         '''insert data to DB'''
         for plugin in plugins:
-            plugin = plugin[:len(plugin)-3]
+            plugin = plugin[:len(plugin)-3]#去掉.py
             self.execSQL('insert into nosqlsploit(type,path) values("%s","%s/%s")'%(dbType,dbType,plugin))
 
     def execSQL(self,sql):
@@ -53,6 +53,13 @@ class DB:
         prettyPrint.prettyPrint("="*len(msg),GREY)
         self.showSearchResult(result)
         
+    def searchPluginByPid(self,pid):
+        cur = self.cursor()
+        sql = "select * from nosqlsploit where id = %s"%pid
+        res = cur.execute(sql).fetchone()
+        cur.close()
+        return res
+
     def showSearchResult(self,result):
         '''format print results'''
         prettyPrint.prettyPrint("%5s %-60s %-7s"%("ID","PATH","TYPE"),YELLOW)
@@ -65,25 +72,25 @@ class DB:
                 pluginPath = pluginPath[:68]+".."
             prettyPrint.prettyPrint("%5s %-60s %-7s"%(pluginId,pluginPath,pluginType),CYAN)
         prettyPrint.prettyPrint("="*74,GREY)
-        prettyPrint.prettyPrint("COUNT [%s] RESULTS (*^_^*)"%len(result),GREEN)
+        prettyPrint.prettyPrint("total [%s] results found "%len(result),GREEN)
         
     def showPlugins(self,pluginType):
         '''show plugins'''
-        pliginStr = ("show %s plugins"%pluginType).upper()
-        prrettyPrint.prettyPrint(pluginStr,YELLOW)
+        pluginStr = ("show %s plugins"%pluginType).upper()
+        prettyPrint.prettyPrint(pluginStr,YELLOW)
         prettyPrint.prettyPrint("="*len(pluginStr),GREY)
         if pluginType.lower() == 'all':
             sql = 'select * from nosqlsploit'
         else:
-            sql = "select * from nosqlsploit where type='%s'"%pluginType
+            sql = 'select * from nosqlsploit where type like "%'+pluginType+'%"'
         self.showSearchResult(self.fetchAll(sql))
                 
     def getPluginNums(self,pluginType):
         '''get plugins nums'''
-        if pluginType == 'all':
+        if pluginType.lower == 'all':
             return len(self.fetchAll('select * from nosqlsploit'))
         else:
-            return len(self.fetchAll('select * from nosqlsploit where type="%s"'%pluginType))
+            return len(self.fetchAll('select * from nosqlsploit where type like "%'+pluginType+'%"'))
 
 if __name__=='__main__':
     print __doc__
