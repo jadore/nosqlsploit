@@ -126,7 +126,6 @@ class banner:
         prettyPrint.prettyPrint('PLUGINs::%s::%s'%(self.mongodb,mongodbNum),YELLOW)
         
 if __name__=='__main__':
-#    print __doc__
-#else:
-    banner = banner()
-    banner.main()
+    print __doc__
+else:
+    ban = banner()

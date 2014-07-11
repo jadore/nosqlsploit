@@ -18,7 +18,7 @@ class tools:
         system(cmd)
         
     def cls(self):
-        '''clear'''
+        '''clear the screen'''
         if name == 'nt':
             system("cls")
         else:

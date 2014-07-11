@@ -1,13 +1,13 @@
 '''
-Mst=>Plugin=>Class
 '''
 from MstColor   import *
 from MstExploit import *
 from os         import path,system
 class m:
-    '''mst plugin's class'''
+    '''NSS plugin's class'''
     def __init__(self,name):
         '''exec plugin code'''
+        color.cprint("PLUGIN INFOS  %s\n"%name,YELLOW)
         fp   = open(name).read()
         exec(fp)
         code = '\n'
@@ -19,6 +19,7 @@ class m:
         code += "global plugin\n"
         code += "plugin=mstplugin()\n"
         exec(fp+code)
+
     def info(self):
         '''display plugin infos'''
         color.cprint("PLUGIN INFOS",YELLOW)
@@ -30,6 +31,7 @@ class m:
             v=n[1]
             color.cprint("%-15s"%p,CYAN,0)
             color.cprint("%-s"%v,PURPLE)
+
     def opt(self):
         '''display plugin opts'''
         color.cprint("PLUGIN OPTS",YELLOW)
@@ -59,6 +61,7 @@ class m:
                 d=n[1]
                 color.cprint("%-15s"%p,CYAN,0)
                 color.cprint("%-40s"%d,PURPLE)
+
     def setp(self,p,v):
         '''set plugin par value'''
         p=p.upper()
@@ -80,6 +83,7 @@ class m:
             code  = 'global %s\n'%p
             code += '%s="%s"'%(p,v)
             exec(code)
+
     def getopt(self,opt):
         '''get plugin opt'''
         ok='FALSE'
@@ -100,6 +104,7 @@ class m:
             pass
         color.cprint("[*] Start exploit..",YELLOW)
         plugin.exploit()
+
     def checkpayload(self,payload):
         '''check payload exists'''
         ok='no'
@@ -110,7 +115,6 @@ class m:
             ok='true'
         return ok.upper()
 
-
     def printp(self,pt,plu):
         '''plugin color input'''
         ptmp=plu.split("/")
@@ -118,8 +122,9 @@ class m:
         color.cprint("mst",GREY,0)
         color.cprint("%s["%pt,WHITE,0)
         color.cprint(pplu,RED,0)
-        color.cprint("]",WHITE,0)
-    def pluhelp(self):
+        color.cprint("]\n",WHITE,0)
+
+    def pluHelp(self):
         '''plugin help menu'''
         color.cprint('PLUGIN HELP MENU',YELLOW)
         color.cprint('================',GREY)
@@ -127,10 +132,10 @@ class m:
         color.cprint('        -------         -----------',GREY,0)
         color.cprint('''
         help            Displays the plugin menu
-        back            Back to Mst Main
+        back            Back to NSS Main
         cls             Clear the screen
         info            Displays the plugin info
-        opts            Displays the mst options
+        show            Displays the plugin options
         set             Configure the plugin parameters
         exploit         Start plugin to exploit''',CYAN)
         color.cprint('PLUGIN SET HELP',YELLOW)
@@ -140,6 +145,7 @@ class m:
         color.cprint('''
         PAYLOAD         Set payload
         <PARAMETER>     Set parameter''',CYAN)
+
     def cls(self):
         '''clear the screen'''
         if  name == 'nt':
