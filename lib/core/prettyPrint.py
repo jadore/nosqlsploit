@@ -1,6 +1,3 @@
-'''
-Mst=>libs=>color
-'''
 from os import name
 if name == 'nt':
     '''windows color table'''
@@ -15,7 +12,7 @@ if name == 'nt':
     WHITE = 0x07
     GREY  = 0x08
 else:
-    '''other os color table'''
+    '''linux color table'''
     #global BLACK,BLUE,GREEN,CYAN,RED,PURPLE,YELLOW,WHITE,GREY
     BLACK = '\033[0m'
     BLUE  = '\033[34m'
@@ -26,8 +23,9 @@ else:
     YELLOW= '\033[33m'
     WHITE = '\033[37m'
     GREY  = '\033[38m'
+
 wincode   = """
-class ntcolor:
+class prettyPrint:
     '''windows cmd color'''
     try:
         STD_INPUT_HANDLE = -10
@@ -37,12 +35,12 @@ class ntcolor:
         std_out_handle = ctypes.windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
         def set_cmd_text_color(self,color, handle=std_out_handle):
             '''set color'''
-            bool = self.ctypes.windll.kernel32.SetConsoleTextAttribute(handle, color)
-            return bool
+            res = self.ctypes.windll.kernel32.SetConsoleTextAttribute(handle, color)
+            return res
         def resetColor(self):
             '''reset color'''
             self.set_cmd_text_color(RED|GREEN|BLUE)
-        def cprint(self,msg,color=BLACK,enter=1):
+        def prettyPrint(self,msg,color=BLACK,enter=1):
             '''print color message'''
             self.set_cmd_text_color(color|color|color)
             if enter == 1:
@@ -53,22 +51,24 @@ class ntcolor:
     except:
         pass
 """
-otcode    = """
-class otcolor:
-    '''other os terminal color'''
-    def cprint(self,msg,color=BLACK,enter=1):
+
+linuxCode    = """
+class prettyPrint:
+    '''linux terminal color'''
+    def prettyPrint(self,msg,color=BLACK,enter=1):
         '''print color message'''
         if enter == 1:
             print color+msg+BLACK
         else:
             print color+msg+BLACK,
 """
+
 if __name__ == '__main__':
     print __doc__
 else:
     if name == 'nt':
-        exec(wincode)
-        color = ntcolor()
+        exec(winCode)
+        prettyPrint = prettyPrint()
     else:
-        exec(otcode)
-        color = otcolor()
+        exec(linuxCode)
+        prettyPrint = prettyPrint()

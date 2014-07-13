@@ -6,22 +6,22 @@ from os import listdir,system
 
 class DB:
     def __init__(self):
-        self.db = 'db/nosqlsploit.db'
+        self.db = 'db/nss.db'
         self.plugin = 'plugins'
         self.mongodb = 'mongodb'
         self.sep = "/"
 
 
     def initDB(self):        
-        self.execSQL("create table if not exists nosqlsploit(id integer primary key,type text,path text)")
-        self.execSQL("delete from nosqlsploit")
+        self.execSQL("create table if not exists nss(id integer primary key,type text,path text)")
+        self.execSQL("delete from nss")
         self.insertToDB(self.getPlugins(self.mongodb),self.mongodb)
 
     def insertToDB(self,plugins,dbType):
         '''insert data to DB'''
         for plugin in plugins:
             plugin = plugin[:len(plugin)-3]#去掉.py
-            self.execSQL('insert into nosqlsploit(type,path) values("%s","%s/%s")'%(dbType,dbType,plugin))
+            self.execSQL('insert into nss(type,path) values("%s","%s/%s")'%(dbType,dbType,plugin))
 
     def execSQL(self,sql):
         '''execute a sql'''
@@ -46,7 +46,7 @@ class DB:
     
     def searchPlugin(self,keyword):
         '''search plugins'''
-        sql = 'select * from nosqlsploit where path like "%'+keyword+'%"'
+        sql = 'select * from nss where path like "%'+keyword+'%"'
         result = self.fetchAll(sql)
         msg = "SEARCH '%s'"%keyword
         prettyPrint.prettyPrint(msg,YELLOW)
@@ -55,7 +55,7 @@ class DB:
         
     def searchPluginByPid(self,pid):
         cur = self.cursor()
-        sql = "select * from nosqlsploit where id = %s"%pid
+        sql = "select * from nss where id = %s"%pid
         res = cur.execute(sql).fetchone()
         cur.close()
         return res
@@ -80,17 +80,17 @@ class DB:
         prettyPrint.prettyPrint(pluginStr,YELLOW)
         prettyPrint.prettyPrint("="*len(pluginStr),GREY)
         if pluginType.lower() == 'all':
-            sql = 'select * from nosqlsploit'
+            sql = 'select * from nss'
         else:
-            sql = 'select * from nosqlsploit where type like "%'+pluginType+'%"'
+            sql = 'select * from nss where type like "%'+pluginType+'%"'
         self.showSearchResult(self.fetchAll(sql))
                 
     def getPluginNums(self,pluginType):
         '''get plugins nums'''
         if pluginType.lower == 'all':
-            return len(self.fetchAll('select * from nosqlsploit'))
+            return len(self.fetchAll('select * from nss'))
         else:
-            return len(self.fetchAll('select * from nosqlsploit where type like "%'+pluginType+'%"'))
+            return len(self.fetchAll('select * from nss where type like "%'+pluginType+'%"'))
 
 if __name__=='__main__':
     print __doc__

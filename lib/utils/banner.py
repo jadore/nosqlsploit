@@ -114,16 +114,16 @@ class banner:
 ''',PURPLE)
 
     def main(self):
-        '''nosqlsploit banner '''
+        '''nss banner '''
         db = DB()
         mongodbNum = db.getPluginNums(self.mongodb)
         choice([self.ban1,self.ban2,self.ban3,self.ban4])()
         print '          =[',
-        prettyPrint.prettyPrint('NSS::nosqlsploit ',GREEN)                  
+        prettyPrint.prettyPrint('NSS::NoSqlSploit ',GREEN)                  
         print '        -+=[',
         prettyPrint.prettyPrint('VER::%s'%self.version,CYAN)                
         print '    + -- +=[',
-        prettyPrint.prettyPrint('PLUGINs::%s::%s'%(self.mongodb,mongodbNum),YELLOW)
+        prettyPrint.prettyPrint('PLUGINS::%s::%s'%(self.mongodb,mongodbNum),YELLOW)
         
 if __name__=='__main__':
     print __doc__

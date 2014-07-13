@@ -1,12 +1,13 @@
 #!/usr/bin/python2.7
 #coding:utf-8
 
+#author:jadore
+#create:2014-07-07 
+#version:v1.0
+#mail:jadore@jadore.wang
+#last update:2014-07-09 14:33
+
 """
-author:jadore
-create:2014-07-07 
-version:v1.0
-mail:jadore@jadore.wang
-last update:2014-07-09 14:33
 """
 
 from cmd import *
@@ -15,13 +16,13 @@ from lib.utils.banner import *
 from lib.utils.db import *
 from lib.utils.prettyPrint import *
 from lib.utils.prettyPrint import prettyPrint as pp
-from lib.core.loadModule import *
+from lib.core.loadPlugin import *
 
 
-class NoSqlSploit(Cmd):
+class NSS(Cmd):
     def __init__(self):
         Cmd.__init__(self)
-        self.prompt = "NoSqlSploit >"
+        self.prompt = "NSS >"
         self.tools = tools()
         self.banner = banner()
         self.db = DB()
@@ -64,8 +65,8 @@ class NoSqlSploit(Cmd):
 if __name__ == '__main__':
     tool = tools()
     try:
-        noSqlSploit = NoSqlSploit()
-        noSqlSploit.cmdloop()
+        nss = NSS()
+        nss.cmdloop()
     except KeyboardInterrupt:
         tool.mainExit()
     except Exception,e:
