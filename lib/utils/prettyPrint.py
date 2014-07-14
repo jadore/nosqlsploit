@@ -24,7 +24,7 @@ else:
     WHITE = '\033[37m'
     GREY  = '\033[38m'
 
-wincode   = """
+winCode   = """
 class prettyPrint:
     '''windows cmd color'''
     try:
@@ -33,10 +33,10 @@ class prettyPrint:
         STD_ERROR_HANDLE = -12
         import ctypes
         std_out_handle = ctypes.windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
-        def set_cmd_text_color(self,color, handle=std_out_handle):
+        def set_cmd_text_color(self, color, text=""):
             '''set color'''
-            res = self.ctypes.windll.kernel32.SetConsoleTextAttribute(handle, color)
-            return res
+            self.ctypes.windll.kernel32.SetConsoleTextAttribute(std_out_handle, color)
+            return text
         def resetColor(self):
             '''reset color'''
             self.set_cmd_text_color(RED|GREEN|BLUE)
@@ -55,6 +55,8 @@ class prettyPrint:
 linuxCode    = """
 class prettyPrint:
     '''linux terminal color'''
+    def set_cmd_text_color(self, color, text=""):
+        return color+text+BLACK
     def prettyPrint(self,msg,color=BLACK,enter=1):
         '''print color message'''
         if enter == 1:

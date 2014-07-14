@@ -14,15 +14,13 @@ class banner:
     def ban1(self):
         '''banner 1'''
         prettyPrint.prettyPrint('''
-             ,,          ,      r22r   r::,,:iii   
-             B@B       ,@@2   @B@GB@@ rB@B@B@B@B   
-             @H@s      @X@s  @B           X@       
-             @:,@,    @G Bs  i@B:         GB       
-             @r M@   GB  @s    XB@Br      G@       
-             Bs  B@ iB,  @s       sB@     MB       
-             @s   BSBs   @s        2Bi    M@       
-             B9   ;B@   ,BH  B@BMG@BG     @B       
-             :     ,     :    ,r22i       ,:
+            #     #  #####   #####  
+            ##    # #     # #     # 
+            # #   # #       #       
+            #  #  #  #####   #####  
+            #   # #       #       # 
+            #    ## #     # #     # 
+            #     #  #####   #####  
             ''',RED)
 
     def ban2(self):

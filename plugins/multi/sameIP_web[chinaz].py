@@ -1,5 +1,5 @@
-#coding=utf-8
-class mstplugin:
+# -*- coding: utf-8 -*-
+class NSSPlugin:
     '''同IP网站查询::tool.chinaz.com/same版'''
     infos = [
         ['插件名称','同IP网站查询[chinaz]版'],
@@ -16,21 +16,21 @@ class mstplugin:
         chinaz = 'http://tool.chinaz.com/Same/'
         value  = {'s':RURL}
         try:
-            color.cprint("[*] Sending data..",YELLOW)
-            tmp    = fuck.urlpost(chinaz,value).read()
-            color.cprint("[+] Formate data..",YELLOW)
-            tmp    = tmp.decode("utf-8")
-            res    = fuck.find('.</span> <a href=[^>]+ target=_blank>',tmp)
+            pp.prettyPrint("[*] Sending data..",YELLOW)
+            tmp = exploitModule.urlPOST(chinaz,value).read()
+            pp.prettyPrint("[+] Formate data..",YELLOW)
+            tmp = tmp.decode("utf-8")
+            res = exploitModule.find('.</span> <a href=[^>]+ target=_blank>',tmp)
             reslen = len(res)
             resiii = 1
             reslog = "sameIP_web[chinaz]_%s"%RURL
             for r in res:
-                tmp= r[18:]
-                tmp= tmp.split("'")
+                tmp = r[18:]
+                tmp = tmp.split("'")
                 ok = tmp[0]
-                color.cprint("[%s/%s] %s"%(resiii,reslen,ok),GREEN)
-                fuck.writelog(reslog,ok+"\n")
-                resiii+=1
-            color.cprint("[*] Get data Successful !LOG:output/%s.log"%reslog,CYAN)
+                pp.prettyPrint("[%s/%s] %s"%(resiii,reslen,ok),GREEN)
+                exploitModule.writeLog(reslog,ok+"\n")
+                resiii += 1
+            pp.prettyPrint("[*] Get data Successful !LOG:output/%s.log"%reslog,CYAN)
         except Exception,e:
-            color.cprint("[!] Err:%s"%e,RED)
+            pp.prettyPrint("[!] Err:%s"%e,RED)

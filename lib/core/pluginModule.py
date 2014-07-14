@@ -9,7 +9,6 @@ class pluginModule:
     '''NSS plugin's class'''
     def __init__(self,pluginPath):
         '''exec plugin code'''
-        pp.prettyPrint("PLUGIN INFOS %s\n"%pluginPath ,YELLOW)
         fp = open(pluginPath).read()
         exec(fp)
         code = '\n'
@@ -17,7 +16,7 @@ class pluginModule:
             key = opt[0]
             value = opt[1]
             code += 'global %s\n'%key
-            code += '%s = "%s"\n'%(key ,value)
+            code += '%s="%s"\n'%(key ,value)
         code += "global plugin\n"
         code += "plugin = NSSPlugin()\n"
         exec(fp+code)
@@ -73,13 +72,12 @@ class pluginModule:
                 exec(code)
                 pp.prettyPrint("[*] Disabled PAYLOAD !" ,YELLOW)
             elif self.checkPayload(value) == 'TRUE' and self.getOption("PAYLOAD") != "FALSE":
-                pp.prettyPrint("[*] SET %s=>%s"%(param ,value) ,YELLOW)
-                code  = 'global %s\n'%param
-                code += '%s="%s"'%(param ,value)
+                pp.prettyPrint("[*] SET PAYLOAD=>%s"%value ,YELLOW)
+                code  = 'global PAYLOAD\n'
+                code += 'PAYLOAD="%s"'%value
                 exec(code)
             else:
                 pp.prettyPrint("[!] SET PAYLOAD FALSE !" ,RED)
-
         else:
             pp.prettyPrint("[*] SET %s=>%s"%(param ,value) ,YELLOW)
             code  = 'global %s\n'%param
@@ -88,14 +86,24 @@ class pluginModule:
 
     def getOption(self,option):
         '''get plugin opt'''
-        ok = 'FALSE'
+        res = 'FALSE'
+        option = option.upper()
         for opt in plugin.opts:
             param = opt[0]
             value = opt[1]
             desc = opt[2]
-            if option == opt:
-                ok = value
-        return ok.upper()
+            if option == param:
+                res = value
+        return res.upper()
+
+    def checkParam(self,param):
+        res = False
+        param = param.upper()
+        for opt in plugin.opts:
+            if param == opt[0]:
+                res = True
+                break
+        return res
 
     def exploit(self):
         '''start exploit !!'''
@@ -116,13 +124,6 @@ class pluginModule:
         if path.exists(payloadFile):
             ok = 'true'
         return ok.upper()
-
-    def printPluginLogo(self ,pluType ,pluName):
-        '''plugin color input'''
-        pp.prettyPrint("NSS" ,GREY ,0)
-        pp.prettyPrint("%s["%pluType ,WHITE ,0)
-        pp.prettyPrint(pluName ,RED ,0)
-        pp.prettyPrint("]\n" ,WHITE ,0)
 
     def pluginHelp(self):
         '''plugin help menu'''

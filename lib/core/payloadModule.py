@@ -1,7 +1,3 @@
-'''
-mst=>payload=>fuck=>functions
-'''
-
 class payloadModule:
     '''functions for payload'''
     def phpDecode(self,phpcode):
@@ -29,7 +25,7 @@ class payloadModule:
         except:
             return "false"
 
-    def getres(self,url,pwd,c):
+    def getRes(self,url,pwd,c):
         '''get shell's response'''
         try:
             code = 'ecHO "{MST}";'
@@ -46,5 +42,5 @@ class payloadModule:
 if __name__=="__main__":
     print __doc__
 else:
-    global payloadmodule
-    payloadModule= payloadModule()
+    global payload
+    payload = payloadModule()

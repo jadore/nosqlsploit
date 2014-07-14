@@ -10,19 +10,20 @@
 """
 """
 
+from os import name
 from cmd import *
 from lib.utils.tools import *
 from lib.utils.banner import *
 from lib.utils.db import *
 from lib.utils.prettyPrint import *
 from lib.utils.prettyPrint import prettyPrint as pp
-from lib.core.loadPlugin import *
-
+from lib.core.loadModule import *
 
 class NSS(Cmd):
     def __init__(self):
         Cmd.__init__(self)
-        self.prompt = "NSS >"
+        prompt = "NSS >"
+        self.prompt = prompt
         self.tools = tools()
         self.banner = banner()
         self.db = DB()

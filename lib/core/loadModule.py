@@ -5,7 +5,7 @@ from prettyPrint import prettyPrint as pp
 from pluginModule import *
 from os        import system
 from cmd import *
-class loadPlugin(Cmd):
+class loadModule(Cmd):
     '''load plugins'''
     def __init__(self,pluginPath):
         Cmd.__init__(self)
@@ -18,13 +18,14 @@ class loadPlugin(Cmd):
             self.pluPath = pluginPath
             self.pluType = ""
             self.pluName = ""
-        self.prompt = "NSS %s[%s]>"%(self.pluType,self.pluName)
+        Type = pp.set_cmd_text_color(WHITE,self.pluType)
+        Name = pp.set_cmd_text_color(RED,self.pluName)
+        self.prompt = "NSS %s[%s]>"%(Type,Name)
 
     
     def preloop(self):
         if self.pluPath:
             self.pluginModule = pluginModule("plugins/%s.py"%self.pluPath)
-            self.pluginModule.printPluginLogo(self.pluType,self.pluName)
         else:
             self.loadError(1)
 
@@ -52,9 +53,17 @@ class loadPlugin(Cmd):
     def do_exploit(self,arg):
         self.pluginModule.exploit()
 
-    def do_set(self,param,value):
-        if len(param) and len(value):
-            self.pluginModule.setParam(param ,value)
+    def do_set(self,arg):
+        args = arg.split(" ")
+        if(len(args) == 2):
+            param = args[0]
+            value = args[1]
+            if len(param) and len(value):
+                res = self.pluginModule.checkParam(param)
+                if res:
+                    self.pluginModule.setParam(param ,value)
+                else:
+                    pp.prettyPrint("[!] ERR:invalid set param" ,YELLOW)
         else:
             pp.prettyPrint("[?] USAGE:set <PARAM> <VALUE>" ,YELLOW)
 

