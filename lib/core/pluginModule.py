@@ -108,8 +108,8 @@ class pluginModule:
     def exploit(self):
         '''start exploit !!'''
         try:
-            global run 
-            run = exploitModule()
+            global exploitModule 
+            exploitModule = exploitModule()
         except:
             pass
         pp.prettyPrint("[*] Start exploit.." ,YELLOW)

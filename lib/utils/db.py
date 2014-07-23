@@ -9,6 +9,7 @@ class DB:
         self.db = 'db/nss.db'
         self.plugin = 'plugins'
         self.mongodb = 'mongodb'
+        self.multi = 'multi'
         self.sep = "/"
 
 
@@ -16,6 +17,7 @@ class DB:
         self.execSQL("create table if not exists nss(id integer primary key,type text,path text)")
         self.execSQL("delete from nss")
         self.insertToDB(self.getPlugins(self.mongodb),self.mongodb)
+        self.insertToDB(self.getPlugins(self.multi),self.multi)
 
     def insertToDB(self,plugins,dbType):
         '''insert data to DB'''

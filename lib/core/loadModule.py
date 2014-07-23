@@ -70,6 +70,8 @@ class loadModule(Cmd):
     def do_EOF(self):
         return True
 
+    do_back = do_exit
+
 if __name__ == '__main__':
     try:
         loads = loadPlugin(arg)

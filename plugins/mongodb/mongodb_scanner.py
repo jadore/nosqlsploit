@@ -19,7 +19,7 @@ class NSSPlugin:
         ipList = []
         
         subnet = RHOSTS
-        port = RPORT
+        port = int(RPORT)
         if PING.lower() == "false":
             ping = False
         else:
@@ -47,7 +47,7 @@ class NSSPlugin:
             pp.prettyPrint("[+]Scan will not ping host before connection attempt.",GREEN)
 
         for target in ipList:
-            result = exploitModule.accessCheck(target.rstrip(),int(RPORT),ping)
+            result = exploitModule.accessCheck(target.rstrip(),port,ping)
 
             if result[0] == 0:
                 Str = "Successful default access on " + target.rstrip() + "(Mongo Version: " + result[1] + ")."

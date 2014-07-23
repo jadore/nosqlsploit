@@ -10,6 +10,7 @@ class banner:
     def __init__(self):
         self.version = '1.0'
         self.mongodb = 'mongodb'
+        self.multi = 'multi'
 
     def ban1(self):
         '''banner 1'''
@@ -115,13 +116,14 @@ class banner:
         '''nss banner '''
         db = DB()
         mongodbNum = db.getPluginNums(self.mongodb)
+        multiNum = db.getPluginNums(self.multi)
         choice([self.ban1,self.ban2,self.ban3,self.ban4])()
         print '          =[',
         prettyPrint.prettyPrint('NSS::NoSqlSploit ',GREEN)                  
         print '        -+=[',
         prettyPrint.prettyPrint('VER::%s'%self.version,CYAN)                
         print '    + -- +=[',
-        prettyPrint.prettyPrint('PLUGINS::%s::%s'%(self.mongodb,mongodbNum),YELLOW)
+        prettyPrint.prettyPrint('PLUGINS::%s:%s %s:%s'%(self.mongodb,mongodbNum,self.multi,multiNum),YELLOW)
         
 if __name__=='__main__':
     print __doc__
