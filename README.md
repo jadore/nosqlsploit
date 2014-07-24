@@ -21,3 +21,5 @@ nosql attack platform
   扫描一个ip端或者一个ip文件，检测是否安装mongodb服务
 2.mongodb net attack：
   针对一个mongodb做安全配置的审计
+  
+开发起源于这篇文档http://drops.wooyun.org/%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/2470
