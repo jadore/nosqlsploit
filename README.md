@@ -22,4 +22,6 @@ nosql attack platform
 2.mongodb net attack：
   针对一个mongodb做安全配置的审计
   
-开发起源于这篇文档http://drops.wooyun.org/%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/2470
+开发起源于这篇文档：http://drops.wooyun.org/%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/2470
+
+另外 感谢好基友 daige  http://daige.me
