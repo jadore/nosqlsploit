@@ -13,7 +13,7 @@ class NSSPlugin:
         ['RPORT','27017','Target Port'],
         ['LHOST','localhost','Local Mongodb/Shell IP'],
         ['LPORT','27017','Target Port'],
-        ['PING',"true",'Enable/disable host pings'],
+        ['PING',"false",'Enable/disable host pings'],
         ['PAYLOAD','false','Do Not Need Payload']
         ]
     def exploit(self):

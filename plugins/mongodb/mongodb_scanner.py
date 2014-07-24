@@ -10,7 +10,7 @@ class NSSPlugin:
     opts  = [
         ['RHOSTS','127.0.0.1','Target IPS'],
         ['RPORT','27017','Target Port'],
-        ['PING',"true",'Enable/disable host pings before attempting connection'],
+        ['PING',"false",'Enable/disable host pings before attempting connection'],
         ['IPFILE','','Target IP File'],
         ['PAYLOAD','false','Do Not Need Payload']
         ]
