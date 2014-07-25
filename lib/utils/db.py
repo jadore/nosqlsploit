@@ -46,41 +46,42 @@ class DB:
         conn.close()
         return res
     
+    def getPluginPath(self):
+        """ get the plugin path"""
+        sql = 'select path from nss'
+        result = self.fetchAll(sql)
+        path = []
+        for res in result:
+            path.append(res[0])
+        return path
+
     def searchPlugin(self,keyword):
         '''search plugins'''
         sql = 'select * from nss where path like "%'+keyword+'%"'
         result = self.fetchAll(sql)
-        msg = "SEARCH '%s'"%keyword
-        prettyPrint.prettyPrint(msg,YELLOW)
-        prettyPrint.prettyPrint("="*len(msg),GREY)
         self.showSearchResult(result)
         
-    def searchPluginByPid(self,pid):
-        cur = self.cursor()
-        sql = "select * from nss where id = %s"%pid
-        res = cur.execute(sql).fetchone()
-        cur.close()
-        return res
-
     def showSearchResult(self,result):
         '''format print results'''
-        prettyPrint.prettyPrint("%5s %-60s %-7s"%("ID","PATH","TYPE"),YELLOW)
-        prettyPrint.prettyPrint("%5s %-60s %-7s"%("-"*5,"-"*60,"-"*7),GREY)
+        prettyPrint.prettyPrint("\n",GREY)
+        msg = "    Matching Modules"
+        prettyPrint.prettyPrint(msg,YELLOW)
+        prettyPrint.prettyPrint("    "+"="*len(msg),GREY)
+        prettyPrint.prettyPrint("    %-5s %-60s %-7s"%("ID","PATH","TYPE"),YELLOW)
+        prettyPrint.prettyPrint("    %-5s %-60s %-7s"%("-"*5,"-"*60,"-"*7),GREY)
         for res in result:
             pluginId = res[0]
             pluginType = res[1]
             pluginPath = res[2]
             if len(pluginPath)>70:
                 pluginPath = pluginPath[:68]+".."
-            prettyPrint.prettyPrint("%5s %-60s %-7s"%(pluginId,pluginPath,pluginType),CYAN)
-        prettyPrint.prettyPrint("="*74,GREY)
-        prettyPrint.prettyPrint("total [%s] results found "%len(result),GREEN)
+            prettyPrint.prettyPrint("    %-5s %-60s %-7s"%(pluginId,pluginPath,pluginType),CYAN)
+        prettyPrint.prettyPrint("    "+"="*74,GREY)
+        prettyPrint.prettyPrint("    total [%s] results found "%len(result),GREEN)
+        prettyPrint.prettyPrint("\n",GREY)
         
     def showPlugins(self,pluginType):
         '''show plugins'''
-        pluginStr = ("show %s plugins"%pluginType).upper()
-        prettyPrint.prettyPrint(pluginStr,YELLOW)
-        prettyPrint.prettyPrint("="*len(pluginStr),GREY)
         if pluginType.lower() == 'all':
             sql = 'select * from nss'
         else:

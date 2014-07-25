@@ -38,25 +38,20 @@ class tools:
         
     def mainHelp(self):
         '''show help'''
-        pp.prettyPrint('NSS HELP MENU',YELLOW)
-        pp.prettyPrint('=============',GREY)
+        pp.prettyPrint("\n",GREY)
+        pp.prettyPrint('    NSS HELP MENU',YELLOW)
+        pp.prettyPrint('    =============',GREY)
         pp.prettyPrint('        COMMAND         DESCRIPTION',YELLOW)
         pp.prettyPrint('        -------         -----------',GREY,0)
         pp.prettyPrint('''
         help            Displays the help menu
-        exit            Exit the NSS
-        cls             Clear the screen
         show            List the plugins
         search          Search plugins
-        use             Use the plugin''',CYAN)
-        pp.prettyPrint('NSS HELP::SHOW',YELLOW)
-        pp.prettyPrint('==============',GREY)
-        pp.prettyPrint('        COMMAND         DESCRIPTION',YELLOW)
-        pp.prettyPrint('        -------         -----------',GREY,0)
-        pp.prettyPrint('''
-        mongodb         List the mongodb plugins
-        multi           List the mongodb plugins
-        all             List all the plugins''',CYAN)
+        use             Use the plugin
+        banner          Show the banner
+        cls             Clear the screen
+        exit            Exit the NSS''',CYAN)
+        pp.prettyPrint("\n",GREY)
 
     def usage(self,keyword):
         '''show usage'''

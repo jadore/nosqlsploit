@@ -23,34 +23,43 @@ class pluginModule:
 
     def info(self):
         '''display plugin infos'''
-        pp.prettyPrint("PLUGIN INFOS" ,YELLOW)
-        pp.prettyPrint("============" ,GREY)
-        pp.prettyPrint("PARAMETER       VALUE" ,YELLOW)
-        pp.prettyPrint("-"*15 + " " + "-"*20 ,GREY)
+        pp.prettyPrint("\n",GREY)
+        pp.prettyPrint("    PLUGIN INFOS" ,YELLOW)
+        pp.prettyPrint("    ============" ,GREY)
+        pp.prettyPrint("        PARAMETER       VALUE" ,YELLOW)
+        pp.prettyPrint("        "+"-"*15 + " " + "-"*20 ,GREY)
         for info in plugin.infos:
             param = info[0]
             value = info[1]
-            pp.prettyPrint("%-15s"%param ,CYAN ,0)
+            pp.prettyPrint("        %-15s"%param ,CYAN ,0)
             pp.prettyPrint("%-s"%value ,PURPLE)
+        pp.prettyPrint("\n",GREY)
+
+    def getOptions(self):
+        options = []
+        for opt in plugin.opts:
+            options.append(opt[0])
+        return options
 
     def showOptions(self):
         '''display plugin options'''
-        pp.prettyPrint("PLUGIN OPTS" ,YELLOW)
-        pp.prettyPrint("===========" ,GREY)
-        pp.prettyPrint("%-15s %-20s %-40s"%("PARAMETER" ,"VALUE" ,"DESCRIPTION") ,YELLOW)
-        pp.prettyPrint("%-15s %-20s %-40s"%("-"*15 ,"-"*20 ,"-"*40) ,GREY)
+        pp.prettyPrint("\n",GREY)
+        pp.prettyPrint("    PLUGIN OPTS" ,YELLOW)
+        pp.prettyPrint("    ===========" ,GREY)
+        pp.prettyPrint("        %-15s %-20s %-40s"%("PARAMETER" ,"VALUE" ,"DESCRIPTION") ,YELLOW)
+        pp.prettyPrint("        %-15s %-20s %-40s"%("-"*15 ,"-"*20 ,"-"*40) ,GREY)
         for opt in plugin.opts:
             param = opt[0]
             value = opt[1]
             desc = opt[2]
-            pp.prettyPrint("%-15s"%param ,CYAN ,0)
+            pp.prettyPrint("        %-15s"%param ,CYAN ,0)
             exec('pp.prettyPrint("%-20s"%' + "%s"%param + ', PURPLE, 0)')
-            pp.prettyPrint("%-40s"%desc ,GREEN)
+            pp.prettyPrint("%-20s"%desc ,GREEN)
         if self.checkPayload(PAYLOAD) == "TRUE":
-            pp.prettyPrint("PAYLOAD OPTS" ,YELLOW)
-            pp.prettyPrint("============" ,GREY)
-            pp.prettyPrint("%-15s %-40s"%("PARAMETER" ,"DESCRIPTION") ,YELLOW)
-            pp.prettyPrint("%-15s %-40s"%("-"*15 ,"-"*40) ,GREY)
+            pp.prettyPrint("    PAYLOAD OPTS" ,YELLOW)
+            pp.prettyPrint("    ============" ,GREY)
+            pp.prettyPrint("        %-15s %-40s"%("PARAMETER" ,"DESCRIPTION") ,YELLOW)
+            pp.prettyPrint("        %-15s %-40s"%("-"*15 ,"-"*40) ,GREY)
             code = open("plugins/payload/" + PAYLOAD + ".py").read()
             exec(code)
             try:
@@ -60,8 +69,9 @@ class pluginModule:
             for opt in NSSPayload.opts:
                 param = opt[0]
                 desc = opt[1]
-                pp.prettyPrint("%-15s"%param ,CYAN ,0)
-                pp.prettyPrint("%-40s"%desc ,PURPLE)
+                pp.prettyPrint("        %-15s"%param ,CYAN ,0)
+                pp.prettyPrint("        %-40s"%desc ,PURPLE)
+        pp.prettyPrint("\n",GREY)
 
     def setParam(self ,param ,value):
         '''set plugin par value'''
@@ -127,25 +137,27 @@ class pluginModule:
 
     def pluginHelp(self):
         '''plugin help menu'''
-        pp.prettyPrint('PLUGIN HELP MENU' ,YELLOW)
-        pp.prettyPrint('================' ,GREY)
+        pp.prettyPrint("\n",GREY)
+        pp.prettyPrint('   PLUGIN HELP MENU' ,YELLOW)
+        pp.prettyPrint('   ================' ,GREY)
         pp.prettyPrint('        Command         Description' ,YELLOW)
         pp.prettyPrint('        -------         -----------' ,GREY ,0)
         pp.prettyPrint('''
         help            Displays the plugin menu
-        back            Back to NSS Main
-        cls             Clear the screen
         info            Displays the plugin info
         show            Displays the plugin options
         set             Configure the plugin parameters
-        exploit         Start plugin to exploit''' ,CYAN)
-        pp.prettyPrint('PLUGIN SET HELP' ,YELLOW)
-        pp.prettyPrint('===============' ,GREY)
+        exploit         Exploit the target
+        cls             Clear the screen
+        back            Back to NSS Main''' ,CYAN)
+        pp.prettyPrint('    PLUGIN SET HELP' ,YELLOW)
+        pp.prettyPrint('    ===============' ,GREY)
         pp.prettyPrint('        Command         Description' ,YELLOW)
         pp.prettyPrint('        -------         -----------' ,GREY,0)
         pp.prettyPrint('''
         PAYLOAD         Set payload
         <PARAMETER>     Set parameter''' ,CYAN)
+        pp.prettyPrint("\n",GREY)
 
     def cls(self):
         '''clear the screen'''

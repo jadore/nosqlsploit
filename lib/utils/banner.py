@@ -124,6 +124,7 @@ class banner:
         prettyPrint.prettyPrint('VER::%s'%self.version,CYAN)                
         print '    + -- +=[',
         prettyPrint.prettyPrint('PLUGINS::%s:%s %s:%s'%(self.mongodb,mongodbNum,self.multi,multiNum),YELLOW)
+        prettyPrint.prettyPrint("\n",GREY)
         
 if __name__=='__main__':
     print __doc__

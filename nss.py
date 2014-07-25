@@ -20,6 +20,7 @@ from lib.utils.prettyPrint import prettyPrint as pp
 from lib.core.loadModule import *
 
 class NSS(Cmd):
+
     def __init__(self):
         Cmd.__init__(self)
         prompt = "NSS >"
@@ -27,6 +28,7 @@ class NSS(Cmd):
         self.tools = tools()
         self.banner = banner()
         self.db = DB()
+        self.SHOW_ARG = ["all","mongodb","multi"]
 
     def preloop(self):
         self.tools.start()
@@ -48,11 +50,29 @@ class NSS(Cmd):
         else:
             self.tools.usage('use')
 
+    def complete_use(self,text,line,begidx,endidx):
+        import readline
+        USE_ARG = self.db.getPluginPath()
+        readline.set_completer_delims(' \n\t`~!@#$%^&*()-=+[{]}\\|;:\'<>?')#重新设置completer_delims，将"/"剔除，从而优化自动不全
+        if not text:
+            completions = USE_ARG[:]
+        else:
+            completions = [i for i in USE_ARG if i.startswith(text)]
+        return completions
+
     def do_show(self,arg):
         if arg :
             self.db.showPlugins(arg)
         else:
             self.tools.usage('show')
+
+    def complete_show(self,text,line,begidx,endidx):
+        if not text:
+            completions = self.SHOW_ARG[:]
+        else:
+            completions = [i for i in self.SHOW_ARG if i.startswith(text)]
+        return completions
+
     
     def do_search(self,arg):
         if arg == "":
@@ -62,7 +82,7 @@ class NSS(Cmd):
 
     def do_banner(self,arg):
         self.banner.main()
-                                     
+
 if __name__ == '__main__':
     tool = tools()
     try:

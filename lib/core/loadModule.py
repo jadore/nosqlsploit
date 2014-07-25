@@ -67,6 +67,14 @@ class loadModule(Cmd):
         else:
             pp.prettyPrint("[?] USAGE:set <PARAM> <VALUE>" ,YELLOW)
 
+    def complete_set(self,text,line,begidx,endidx):
+        USE_ARG = self.pluginModule.getOptions()
+        if not text:
+            completions = USE_ARG[:]
+        else:
+            completions = [i for i in USE_ARG if i.startswith(text)]
+        return completions
+
     def do_EOF(self):
         return True
 
