@@ -33,9 +33,9 @@ class prettyPrint:
         STD_ERROR_HANDLE = -12
         import ctypes
         std_out_handle = ctypes.windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
-        def set_cmd_text_color(self, color, text=""):
+        def set_cmd_text_color(self, color, text="",handle=std_out_handle):
             '''set color'''
-            self.ctypes.windll.kernel32.SetConsoleTextAttribute(std_out_handle, color)
+            self.ctypes.windll.kernel32.SetConsoleTextAttribute(handle, color)
             return text
         def resetColor(self):
             '''reset color'''
