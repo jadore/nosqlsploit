@@ -9,6 +9,8 @@
 
 """
 """
+import readline
+import atexit
 
 from os import name
 from cmd import *

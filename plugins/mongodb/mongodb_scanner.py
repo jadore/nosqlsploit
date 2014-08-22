@@ -10,11 +10,11 @@ class NSSPlugin:
     opts  = [
         ['RHOSTS','127.0.0.1','Target IPS'],
         ['RPORT','27017','Target Port'],
-        ['PING',"false",'Enable/disable host pings before attempting connection'],
+        ['PING',"true",'Enable/disable host pings before attempting connection'],
         ['IPFILE','','Target IP File'],
-        ['PAYLOAD','false','Do Not Need Payload']
         ]
     def exploit(self):
+        mongodb = mongodbModule()
         success = []
         ipList = []
         
@@ -47,7 +47,7 @@ class NSSPlugin:
             pp.prettyPrint("[+]Scan will not ping host before connection attempt.",GREEN)
 
         for target in ipList:
-            result = exploitModule.accessCheck(target.rstrip(),port,ping)
+            result = mongodb.accessCheck(target.rstrip(),port,ping)
 
             if result[0] == 0:
                 Str = "Successful default access on " + target.rstrip() + "(Mongo Version: " + result[1] + ")."

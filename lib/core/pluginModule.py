@@ -3,7 +3,7 @@
 from prettyPrint import *
 from prettyPrint import prettyPrint as pp
 from exploitModule import *
-from os         import path,system
+from os import path,system
 
 class pluginModule:
     '''NSS plugin's class'''
@@ -53,46 +53,17 @@ class pluginModule:
             value = opt[1]
             desc = opt[2]
             pp.prettyPrint("        %-15s"%param ,CYAN ,0)
-            exec('pp.prettyPrint("%-20s"%' + "%s"%param + ', PURPLE, 0)')
-            pp.prettyPrint("%-20s"%desc ,GREEN)
-        if self.checkPayload(PAYLOAD) == "TRUE":
-            pp.prettyPrint("    PAYLOAD OPTS" ,YELLOW)
-            pp.prettyPrint("    ============" ,GREY)
-            pp.prettyPrint("        %-15s %-40s"%("PARAMETER" ,"DESCRIPTION") ,YELLOW)
-            pp.prettyPrint("        %-15s %-40s"%("-"*15 ,"-"*40) ,GREY)
-            code = open("plugins/payload/" + PAYLOAD + ".py").read()
-            exec(code)
-            try:
-                exec("global NSSPayload")
-            except:
-                pass
-            for opt in NSSPayload.opts:
-                param = opt[0]
-                desc = opt[1]
-                pp.prettyPrint("        %-15s"%param ,CYAN ,0)
-                pp.prettyPrint("        %-40s"%desc ,PURPLE)
+            pp.prettyPrint("%-20s"%value, PURPLE, 0)
+            pp.prettyPrint("%-20s"%desc , GREEN)
         pp.prettyPrint("\n",GREY)
 
     def setParam(self ,param ,value):
         '''set plugin par value'''
         param = param.upper()
-        if param == 'PAYLOAD':
-            if value.upper() == "FALSE":
-                code  = 'global PAYLOAD;PAYLOAD="false";'
-                exec(code)
-                pp.prettyPrint("[*] Disabled PAYLOAD !" ,YELLOW)
-            elif self.checkPayload(value) == 'TRUE' and self.getOption("PAYLOAD") != "FALSE":
-                pp.prettyPrint("[*] SET PAYLOAD=>%s"%value ,YELLOW)
-                code  = 'global PAYLOAD\n'
-                code += 'PAYLOAD="%s"'%value
-                exec(code)
-            else:
-                pp.prettyPrint("[!] SET PAYLOAD FALSE !" ,RED)
-        else:
-            pp.prettyPrint("[*] SET %s=>%s"%(param ,value) ,YELLOW)
-            code  = 'global %s\n'%param
-            code += '%s="%s"'%(param ,value)
-            exec(code)
+        pp.prettyPrint("[*] SET %s=>%s"%(param ,value) ,YELLOW)
+        code  = 'global %s\n'%param
+        code += '%s="%s"'%(param ,value)
+        exec(code)
 
     def getOption(self,option):
         '''get plugin opt'''
@@ -125,16 +96,6 @@ class pluginModule:
         pp.prettyPrint("[*] Start exploit.." ,YELLOW)
         plugin.exploit()
 
-    def checkPayload(self,payload):
-        '''check payload exists'''
-        ok = 'no'
-        payloadFile = "plugins/payload/%s.py"%payload
-        if payload == '' or payload.upper() == 'FALSE':
-            ok = 'false'
-        if path.exists(payloadFile):
-            ok = 'true'
-        return ok.upper()
-
     def pluginHelp(self):
         '''plugin help menu'''
         pp.prettyPrint("\n",GREY)
@@ -155,7 +116,6 @@ class pluginModule:
         pp.prettyPrint('        Command         Description' ,YELLOW)
         pp.prettyPrint('        -------         -----------' ,GREY,0)
         pp.prettyPrint('''
-        PAYLOAD         Set payload
         <PARAMETER>     Set parameter''' ,CYAN)
         pp.prettyPrint("\n",GREY)
 

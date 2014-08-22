@@ -3,7 +3,7 @@
 from prettyPrint import *
 from prettyPrint import prettyPrint as pp
 from pluginModule import *
-from os        import system
+from os import system
 from cmd import *
 class loadModule(Cmd):
     '''load plugins'''
@@ -27,13 +27,10 @@ class loadModule(Cmd):
         if self.pluPath:
             self.pluginModule = pluginModule("plugins/%s.py"%self.pluPath)
         else:
-            self.loadError(1)
+            self.loadError()
 
-    def loadError(self,flag):
-        if flag:
-            pp.prettyPrint("[!] NO THIS PLUGIN !",RED)
-        else:
-            pp.prettyPrint("[!] IT'S A PAYLOAD !",RED)
+    def loadError(self):
+        pp.prettyPrint("[!] NO THIS PLUGIN !",RED)
 
     def do_exit(self,arg):
         return True
@@ -72,7 +69,7 @@ class loadModule(Cmd):
         if not text:
             completions = USE_ARG[:]
         else:
-            completions = [i for i in USE_ARG if i.startswith(text)]
+            completions = [i for i in USE_ARG if i.startswith(text.upper())]
         return completions
 
     def do_EOF(self):
